@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Zazz.js</title>
+</head>
+<body>
+  <style>
+    .box1,.box2 {
+      width: 100px;
+      height: 100px;
+      background-color: #000;
+      margin: 30px;
+    }
+  </style>
+  <h1>Zazz.js</h1>
+  <button id="trans">Random Transition Test</button>
+  <div class="box1"></div>
+
+  <button id="anim">Animation Test</button>
+  <div class="box2"></div>
+
+  <script src="src/zazz.js"></script>
+  <script>
+    (function(){
+
+      var transButton = document.getElementById('trans'),
+          animButton = document.getElementById('anim'),
+          box1 = document.querySelector('.box1'),
+          box2 = document.querySelector('.box2');
+
+      transButton.addEventListener('click', function(e){
+
+          var r = Math.floor(Math.random() * 255) + 1,
+              g = Math.floor(Math.random() * 255) + 1,
+              b = Math.floor(Math.random() * 255) + 1,
+              d = Math.floor(Math.random() * 360) + 1;
+
+          Zazz.transition(box1, {
+            css: {
+              'background-color': 'rgb(' + r +','+g+','+b+')',
+              'transform': 'rotate('+d+'deg)'
+            },
+            callback: function(){
+              alert('Transition Complete');
+            }
+          });
+
+      });
+
+      animButton.addEventListener('click', function(e){
+
+          Zazz.animation(box2, {
+            iterationCount: 5,
+            duration: 1,
+            delay: 1,
+            fillMode: 'forwards',
+            endCallback: function(){
+              alert('Animation Complete');
+            }
+          }).step(30, {
+            'background-color': '#F00',
+            'transform': 'translate3d(0,100px,0) rotate(120deg)'
+          }).step(60, {
+            'background-color': '#0F0',
+            'transform': 'translate3d(100px,0,0) rotate(240deg)'
+          }).step(90,{
+            'background-color': '#00F',
+            'transform': 'translate3d(0,0,100px) rotate(360eg)'
+          });
+
+      });
+
+    })();
+  </script>
+</body>
+</html>
